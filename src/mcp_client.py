@@ -14,7 +14,9 @@ load_dotenv(override=True)
 
 FIGMA_API_KEY = os.getenv("FIGMA_API_KEY")
 # Example usage of the MCP client with LangChain
+
 async def main():
+    """Main function to run the MCP client."""
     model = ChatOpenAI(model="gpt-4o-mini", temperature=0.2, max_tokens=2000)
     async with sse_client(url="http://localhost:8000/sse") as streams:
         async with ClientSession(*streams) as session:
