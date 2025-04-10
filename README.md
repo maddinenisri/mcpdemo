@@ -76,7 +76,11 @@ The server uses FastMCP to create and run the MCP server with these tools.
 To run the project:
 
 1. Set up the required environment variables in the `.env` file, including the `FIGMA_API_KEY`.
-2. In a separate terminal, run the MCP client:
+2. In a separate terminal, run the MCP server:
+   ```
+   python src/mcp_server.py
+   ```
+3. In a separate terminal, run the MCP client:
    ```
    python src/mcp_client.py
    ```
