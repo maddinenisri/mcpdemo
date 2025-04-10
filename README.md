@@ -99,5 +99,6 @@ The project uses a `pyproject.toml` file for configuration and dependency manage
 ## 9. References
 
 - [Langchain MCP Server](https://apidog.com/blog/langchain-mcp-server/)
+- [MCP Server tools and resources](https://www.youtube.com/watch?v=-WogqfxWBbM)
 
 This documentation provides an overview of the MCP Demo project, its structure, and how to use it. For more detailed information about specific components or functionalities, refer to the inline comments in the source code files.
