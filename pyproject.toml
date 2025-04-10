@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "mcpdemo"
+version = "0.1.0"
+description = "A sample project to demonstrate mcp client and server interacts using Langchain."
+authors = ["Srini Maddineni srini@mdstechinc.com"]
+license = "MIT"
+
+# Define packages to include in the distribution
+packages = [
+    { include = "src" }
+]
+
+[tool.poetry.dependencies]
+# Specify the Python version required by the project
+python = "^3.13"
+python-dotenv = "^1.0.1"
+openai = "^1.66.3"
+langchain = "^0.3.20"
+langchain-openai = "^0.3.9"
+langgraph = "^0.3.14"
+fastapi = "^0.115.11"
+uvicorn = "^0.34.0"
+asyncio = "^3.4.3"
+langchain-text-splitters = "^0.3.6"
+langchain-mcp-adapters = "^0.0.7"
+mcp = "^1.6.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+flake8 = "^6.0.0"
+reportlab = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
