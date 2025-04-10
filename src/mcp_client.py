@@ -1,4 +1,5 @@
 import asyncio
+import os
 from dotenv import load_dotenv
 
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -9,6 +10,7 @@ from langchain_mcp_adapters.client import MultiServerMCPClient
 # Load environment variables
 load_dotenv(override=True)
 
+FIGMA_API_KEY = os.getenv("FIGMA_API_KEY")
 # Example usage of the MCP client with LangChain
 async def main():
     model = ChatOpenAI(model="gpt-4o-mini", temperature=0.2, max_tokens=2000)
@@ -23,7 +25,7 @@ async def main():
                 "command": "npx",
                 "args": ["-y", "figma-developer-mcp", "--stdio"],
                 "env": {
-                    "FIGMA_API_KEY": "XXXXXXXXXX",  # Replace with your actual Figma API key
+                    "FIGMA_API_KEY": FIGMA_API_KEY,  # Replace with your actual Figma API key
                 },
                 "transport": "stdio",
             },
@@ -34,8 +36,6 @@ async def main():
         tools = client.get_tools()
         print("Available tools:", tools)
         agent = create_react_agent(model, client.get_tools())
-        # Define the prompt template
-        # message = "Analyze the sentiment of this text: 'I love programming!' and get me the summary of sale details."
         
         inputs = {
             "messages": [
