@@ -84,6 +84,10 @@ To run the project:
    ```
    python src/mcp_client.py
    ```
+4. In a separate terminal, run the api server for tools:
+   ```
+   python src/api_server.py
+   ```
 
 The client will send a sample request to analyze the sentiment of the text "I love programming!" and query sales data. The server will process these requests and return the results.
 
