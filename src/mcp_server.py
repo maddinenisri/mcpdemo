@@ -26,4 +26,4 @@ def data_query(
     return {"result": {"product": "MacBook", "comments": "Product is exceeded our expectation"}, "source": source}
 
 if __name__ == "__main__":
-    mcp.run(transport="sse")
+    mcp.run(transport="stdio")
