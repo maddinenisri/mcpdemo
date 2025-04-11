@@ -5,36 +5,39 @@ from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.prebuilt import create_react_agent
 from langchain_openai import ChatOpenAI
-from langchain_mcp_adapters.client import MultiServerMCPClient
+from langchain_mcp_adapters.client import MultiServerMCPClient, StdioConnection
 
 # Load environment variables
 load_dotenv(override=True)
 
+servers = {
+    "local-server": StdioConnection(command="python", args=["src/mcp_server.py"]),
+    "figma-server": 
+        StdioConnection(
+            command="npx",
+            args=["-y", "figma-developer-mcp", "--stdio"],
+            env={"FIGMA_API_KEY": os.getenv("FIGMA_API_KEY")}
+        )
+}
+
 FIGMA_API_KEY = os.getenv("FIGMA_API_KEY")
 # Example usage of the MCP client with LangChain
 async def main():
+    """
+    Example usage of the MCP client with LangChain
+    """
+    # Initialize the model
+    # Note: You can use any model compatible with LangChain
     model = ChatOpenAI(model="gpt-4o-mini", temperature=0.2, max_tokens=2000)
-    async with MultiServerMCPClient(
-        {
-            "local-server": {
-                "command": "python",
-                "args": ["src/mcp_server.py"],  # Adjust the path to your server
-                "transport": "stdio",
-            },
-            "figma-server": {
-                "command": "npx",
-                "args": ["-y", "figma-developer-mcp", "--stdio"],
-                "env": {
-                    "FIGMA_API_KEY": FIGMA_API_KEY,  # Replace with your actual Figma API key
-                },
-                "transport": "stdio",
-            },
-        }
-    ) as client:
+    
+    # Initialize the MCP client with multiple servers
+    async with MultiServerMCPClient(servers) as client:
         print("MCP client started")
         # Load available tools
         tools = client.get_tools()
-        print("Available tools:", tools)
+        # Print available tools
+        for tool in tools:
+            print(f"tool {tool.name}({tool.input_schema}) -> {tool.output_schema}")
         agent = create_react_agent(model, client.get_tools())
         
         inputs = {
@@ -58,7 +61,8 @@ async def main():
                 # HumanMessage(content="Fetch figma JSON document and return as is using mcp server tool from Figma URL: ..")
             ]}
         response = await agent.ainvoke(input=inputs)
-        print(response['messages'][-1].content)
+        return response
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    result = asyncio.run(main())
+    print(result['messages'][-1].content)

@@ -76,9 +76,17 @@ The server uses FastMCP to create and run the MCP server with these tools.
 To run the project:
 
 1. Set up the required environment variables in the `.env` file, including the `FIGMA_API_KEY`.
-2. In a separate terminal, run the MCP client:
+2. In a separate terminal, run the MCP server:
+   ```
+   python src/mcp_server.py
+   ```
+3. In a separate terminal, run the MCP client:
    ```
    python src/mcp_client.py
+   ```
+4. In a separate terminal, run the api server for tools:
+   ```
+   python src/api_server.py
    ```
 
 The client will send a sample request to analyze the sentiment of the text "I love programming!" and query sales data. The server will process these requests and return the results.
@@ -95,5 +103,6 @@ The project uses a `pyproject.toml` file for configuration and dependency manage
 ## 9. References
 
 - [Langchain MCP Server](https://apidog.com/blog/langchain-mcp-server/)
+- [MCP Server tools and resources](https://www.youtube.com/watch?v=-WogqfxWBbM)
 
 This documentation provides an overview of the MCP Demo project, its structure, and how to use it. For more detailed information about specific components or functionalities, refer to the inline comments in the source code files.
